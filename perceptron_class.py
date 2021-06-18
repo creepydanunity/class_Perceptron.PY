@@ -1,9 +1,10 @@
 from math import exp
 from random import random
+from keras.datasets import mnist
 
 
 class Perceptron:
-    def __init__(self, inputs=1):
+    def __init__(self, inputs=28 * 28):
         self.weights = [random() / 2 for i in range(inputs)]
         self.bias = random() / 2
 
@@ -30,3 +31,18 @@ class Perceptron:
             self.weights[i] += delta_w * lr * x[i]
         self.bias += delta_w * lr
 
+
+(train_X, train_y), (test_X, test_y) = mnist.load_data()
+neuron_network = [Perceptron() for i in range(60000)]
+
+train_x = []
+for i in range(len(train_X)):
+    temp_x = []
+    for j in range(len(train_X[i])):
+        temp_x += [x / 255 for x in train_X[i][j]]
+    train_x.append(temp_x)
+print(train_x)
+
+#for age in range(250):
+#    for neuron in neuron_network:
+#    print(f'Result on {age} loop: {-1}')
